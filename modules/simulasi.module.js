@@ -148,12 +148,14 @@ class _simulasi {
 
   editSimulasi = async (id, body) => {
     try {
-      const existingSimulasi = await prisma.simulasi.findUnique({
+      const existingSimulasi = await prisma.simulasi.findFirst({
         where: {
           id_simulasi: id,
         },
       });
 
+      console.log("idnya adalah" + id)
+  
       if (!existingSimulasi) {
         return {
           status: false,
@@ -161,34 +163,32 @@ class _simulasi {
         };
       }
 
-      const { kode_barang, nilai_komoditas } = body;
-
+      const { kode_barang } = existingSimulasi
+  
+      const { nilai_komoditas } = body; 
+  
       const schema = Joi.object({
-        kode_barang: Joi.string().required(),
         nilai_komoditas: Joi.number().required(),
       });
-
+  
       const validation = schema.validate(body);
-
+  
       if (validation.error) {
         const errorDetails = validation.error.details.map(
           (detail) => detail.message
         );
-
+  
         return {
           status: false,
           code: 442,
           error: errorDetails.join(", "),
         };
       }
-
-      // Get informasi barang baru
-      const { uraian_barang, bm, cukai } = await this.getBarang(kode_barang);
-
-      // Menghitung nilai bm baru
+     
+      const { uraian_barang, bm, cukai, } = await this.getBarang(kode_barang); 
+   
       const nilai_bm = (nilai_komoditas * cukai) / 100;
-
-      // Put simulasi
+  
       const updatedSimulasi = await prisma.simulasi.update({
         where: {
           id_simulasi: id,
@@ -201,20 +201,20 @@ class _simulasi {
           nilai_bm,
         },
       });
-
+  
       return {
         status: true,
         data: updatedSimulasi,
       };
     } catch (error) {
       console.error("editSimulasi module error", error);
-
+  
       return {
         status: false,
         error: error.message,
       };
     }
-  };
+  };  
 
   deleteSimulasi = async (id) => {
     try {

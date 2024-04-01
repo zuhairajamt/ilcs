@@ -22,13 +22,13 @@ SimulasiController.post("/", async (req, res) => {
 
 SimulasiController.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const del = await m$simulasi.editSimulasi(id); 
+  const del = await m$simulasi.editSimulasi(id, req.body); 
   response.sendResponse(res, del);
 });
 
 SimulasiController.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const del = await m$simulasi.editSimulasi(id); 
+  const del = await m$simulasi.deleteSimulasi(id); 
   response.sendResponse(res, del);
 });
 
