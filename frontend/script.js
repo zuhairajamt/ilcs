@@ -19,7 +19,7 @@ document.getElementById("simulasiForm").addEventListener("submit", async functio
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ kode_barang, nilai_komoditas })
+        body: JSON.stringify({ nilai_komoditas })
       });
   
       const data = await response.json();
