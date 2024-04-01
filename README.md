@@ -8,3 +8,5 @@
 
 ## Dokumentasi API
 https://documenter.getpostman.com/view/15312878/2sA35HWfye
+
+<img src='./capture.png' width=60%>
