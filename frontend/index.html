@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulasi</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Simulasi Barang</h2>
+      <form id="simulasiForm">
+        <input type="hidden" id="simulasiId" />
+        <label for="kode_barang">Kode Barang:</label>
+        <input type="text" id="kode_barang" required />
+        <label for="nilai_komoditas">Nilai Komoditas:</label>
+        <input type="number" id="nilai_komoditas" required />
+        <button type="submit">Simpan</button>
+      </form>
+      <table id="simulasiTable">
+        <thead>
+          <tr>
+            <th>ID Simulasi</th>
+            <th>Kode Barang</th>
+            <th>Uraian Barang</th>
+            <th>BM</th>
+            <th>Nilai Komoditas</th>
+            <th>Nilai BM</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="simulasiTableBody"></tbody>
+      </table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

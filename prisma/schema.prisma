@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model simulasi {
+  id_simulasi     String   @id @default(uuid())
+  kode_barang     String
+  uraian_barang   String
+  bm              Int
+  nilai_komoditas Float
+  nilai_bm        Float
+  waktu_insert    DateTime @default(now())
+}

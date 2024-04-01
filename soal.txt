@@ -1,0 +1,55 @@
+nomor 1
+SELECT KAPAL, PELAYARAN, GROUP_CONCAT(DISTINCT TUJUAN SEPARATOR ', ') AS TUJUAN, TGL_BERANGKAT
+FROM jadwal_pelayaran
+WHERE ASAL = 'TJ PRIOK' AND TGL_BERANGKAT = '2024-01-01'
+GROUP BY KAPAL, PELAYARAN, TGL_BERANGKAT;
+
+
+nomor 2
+SELECT KAPAL, PELAYARAN, TUJUAN, TGL_BERANGKAT, COUNT(*) AS JUMLAH_TIKET
+FROM jadwal_pelayaran
+GROUP BY KAPAL, PELAYARAN, TUJUAN, TGL_BERANGKAT;
+
+
+nomor 3
+SELECT CONCAT(PREFIX, LPAD(SEQUENCE, 6, '0')) AS ID
+FROM tabel_anda;
+
+
+soal uian
+
+SELECT 
+    ujian.id,
+    ujian.nama,
+    (jumlah_benar_soal1 * bobot.soal1_benar +
+     jumlah_benar_soal2 * bobot.soal2_benar +
+     jumlah_benar_soal3 * bobot.soal3_benar +
+     jumlah_benar_soal4 * bobot.soal4_benar +
+     jumlah_benar_soal5 * bobot.soal5_benar) AS skor
+FROM
+    (SELECT 
+        id,
+            nama,
+            SUM(CASE WHEN soal1 = 'BENAR' THEN 1 ELSE 0 END) AS jumlah_benar_soal1,
+            SUM(CASE WHEN soal2 = 'BENAR' THEN 1 ELSE 0 END) AS jumlah_benar_soal2,
+            SUM(CASE WHEN soal3 = 'BENAR' THEN 1 ELSE 0 END) AS jumlah_benar_soal3,
+            SUM(CASE WHEN soal4 = 'BENAR' THEN 1 ELSE 0 END) AS jumlah_benar_soal4,
+            SUM(CASE WHEN soal5 = 'BENAR' THEN 1 ELSE 0 END) AS jumlah_benar_soal5
+    FROM
+        ujian
+    GROUP BY id , nama) AS ujian
+        JOIN
+    (SELECT 
+        SUM(CASE WHEN nama = 'BENAR' THEN bobot END) AS soal1_benar,
+            SUM(CASE WHEN nama = 'SALAH' THEN bobot END) AS soal1_salah,
+            SUM(CASE WHEN nama = 'BENAR' THEN bobot END) AS soal2_benar,
+            SUM(CASE WHEN nama = 'SALAH' THEN bobot END) AS soal2_salah,
+            SUM(CASE WHEN nama = 'BENAR' THEN bobot END) AS soal3_benar,
+            SUM(CASE WHEN nama = 'SALAH' THEN bobot END) AS soal3_salah,
+            SUM(CASE WHEN nama = 'BENAR' THEN bobot END) AS soal4_benar,
+            SUM(CASE WHEN nama = 'SALAH' THEN bobot END) AS soal4_salah,
+            SUM(CASE WHEN nama = 'BENAR' THEN bobot END) AS soal5_benar,
+            SUM(CASE WHEN nama = 'SALAH' THEN bobot END) AS soal5_salah
+    FROM
+        bobot) AS bobot ON 1=1
+ORDER BY skor DESC;
